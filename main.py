@@ -53,10 +53,11 @@ def main():
 
     # Live test
     samples = [
-        "shop mình vừa về hàng mới inbox nha 150k",
-        "hôm nay mưa to quá chán ghê",
-        "tuyển nhân viên lương 8tr liên hệ zalo",
-        "giá vàng hôm nay tăng mạnh",
+        "chắc nhiều bác chủ phòng sẽ cần, em có bán nha, thiết kế theo yêu cầu, freeship",
+        "Ông ngoại em đang cần bán mảnh Đất  giá chỉ có 2 tỷ  Ai muốn mua qua nhà em chỗ Vạn Phúc Hà Đông em dẫn đi xem đất ạ. Đất của ông bà em ông em giờ muốn về quê ở để an dưỡng tuổi già cũng là để gần tổ tiên. Nên ông có nhờ e bán ạ. Liên hệ em qua sdt: 00000000000 Để đi xem trực tiếp",
+        "🌺 Chủ cần bán nhà Phú Thượng Dt/65m2 6tầng thang máy Ô tô đỗ cổng,vào nhà Giá bán nhỉnh 15tỷ. 🔥 Khu vực thoáng mát, đẹp, gần Sông Hồng, hưởng trọn tiện ích KDT Ciputra, vài bước là ra đường đôi Sunshine. +Sổ đỏ chính chủ vuông đẹp cất két. ☎️ Zalo E Đặng Phương 000.000.0000 để được xem nhà.",
+        "cần bán 4 chỉ pnj mua 18.7, nay bán 14.6 ngay bây giờ kv q5 hcm",
+        "Em Cần Bán 100k ROS , 100k FLC , 100k BAV zá tốt. Có bán số lượng nhỏ 5k , 10k.. Anh chị cần mua xin Alo Hảo : 00000000000"
     ]
     for t in samples:
         label, score = model.predict(t)
