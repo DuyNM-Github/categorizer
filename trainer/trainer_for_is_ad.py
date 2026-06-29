@@ -1,13 +1,15 @@
 import random
 import sys
+import os
 from pathlib import Path
 
 import fasttext
 
-DATA_PATH = Path("datasets/ads.txt")
-MODEL_PATH = Path("output_models/is_ad.bin")
-TRAIN_PATH = Path("train.txt")
-TEST_PATH = Path("test.txt")
+ROOT_PATH = os.path.dirname(os.path.dirname(__file__))
+DATA_PATH = os.path.join(ROOT_PATH, "datasets/ads.txt")
+MODEL_PATH = os.path.join(ROOT_PATH, "output_models/")
+TRAIN_PATH = os.path.join(ROOT_PATH, "train_is_ad.txt")
+TEST_PATH = os.path.join(ROOT_PATH, "test_is_ad.txt")
 
 
 def main():
@@ -77,20 +79,20 @@ def main():
     for t in samples:
         label, score = model.predict(t)
         print(f"{label[0].replace('__label__','')} {score[0]:.2f} | {t}")
-
-    MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
-    model.save_model(str(MODEL_PATH))
+    
+    os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
+    model.save_model(str(os.path.join(MODEL_PATH, "is_ad.bin")))
     
     model.quantize(
         input=str(TRAIN_PATH),
         qnorm=True,
-        retrain=True,
+        retrain=False,
         cutoff=25000
     )
-    model.save_model(str(MODEL_PATH.with_name("is_ad_compressed.bin")))
+    model.save_model(str(os.path.join(MODEL_PATH, "is_ad_compressed.bin")))
     
     # test the quantized model directly
-    model_q = fasttext.load_model(str(MODEL_PATH.with_name("is_ad_compressed.bin")))
+    model_q = fasttext.load_model(str(os.path.join(MODEL_PATH, "is_ad_compressed.bin")))
 
     n, p, r = model_q.test(str(TEST_PATH))
     f1 = 2 * (p * r) / (p + r)
