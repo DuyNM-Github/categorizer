@@ -22,8 +22,8 @@ def main():
     random.seed(42)
     random.shuffle(lines)
 
-    ads     = [line for line in lines if line.startswith("__label__ad ")]
-    not_ads = [line for line in lines if line.startswith("__label__not_ad")]
+    ads     = [line.lower() for line in lines if line.startswith("__label__ad ")]
+    not_ads = [line.lower() for line in lines if line.startswith("__label__not_ad")]
 
     split_a = int(len(ads) * 0.8)
     split_n = int(len(not_ads) * 0.8)
@@ -89,10 +89,10 @@ def main():
         retrain=False,
         cutoff=25000
     )
-    model.save_model(str(os.path.join(MODEL_PATH, "is_ad_compressed.bin")))
+    model.save_model(str(os.path.join(MODEL_PATH, "is_ad_compressed.ftz")))
     
     # test the quantized model directly
-    model_q = fasttext.load_model(str(os.path.join(MODEL_PATH, "is_ad_compressed.bin")))
+    model_q = fasttext.load_model(str(os.path.join(MODEL_PATH, "is_ad_compressed.ftz")))
 
     n, p, r = model_q.test(str(TEST_PATH))
     f1 = 2 * (p * r) / (p + r)
